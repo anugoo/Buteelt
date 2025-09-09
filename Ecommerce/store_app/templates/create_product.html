@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="mn">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Бараа нэмэх</title>
+    
 </head>
 <body>
     <h1>Шинэ бараа нэмэх</h1>
@@ -12,26 +11,8 @@
         <button type="submit">Хадгалах</button>
     </form>
 
-    {% if form.errors %}
-        <ul>
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <li>{{ field.label }}: {{ error }}</li>
-                {% endfor %}
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <h2></h2>
 
-    <h2>Бараануудын жагсаалт</h2>
-
-    {% if products %}
-        <ul>
-        {% for product in products %}
-            <li>{{ product.pname }} - {{ product.price }}₮</li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>Одоогоор бараа байхгүй байна.</p>
-    {% endif %}
+    
 </body>
 </html>
