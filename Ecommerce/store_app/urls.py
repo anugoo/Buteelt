@@ -1,5 +1,10 @@
 from django.urls import path
 from . import views
+from django.contrib import admin
+from django.urls import path
+from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -12,7 +17,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard_view, name='dashboard'),
     path('order/', views.order_view, name='order'),
     path('place/', views.place_view, name='place'),
-    path('detail/', views.detail_view, name='detail'),
+    path('detail/<slug:slug>/', views.detail_view, name='detail'),
     path('search/', views.search_view, name='search'),
       # амжилтын хуудсанд шилжих
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import ProductForm
-from .models import Product
+from .models import Product,Category
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
@@ -62,4 +62,6 @@ def product_success(request):
     return render(request, 'product_success.html')
 
 def index(request):
-    return render(request, "index.html")
+    cat = Category.objects.all()
+    pro = Product.objects.all()
+    return render(request, "index.html",{'cats':cat,'products':pro})
