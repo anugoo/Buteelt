@@ -76,8 +76,9 @@
 				<i class="fa fa-bars"></i> All category 
 			</button>
 			<div class="dropdown-menu">
-				{% for cat in cats %}
-					<a class="dropdown-item" href="#">{{ cat.category_name }}</a>
+
+				{% for cat in all_categories %}
+					<a class="dropdown-item" href="#">{{ cat.cat.name }}</a>
 				{% empty %}
 					<span class="dropdown-item text-muted">No categories found</span>
 				{% endfor %}

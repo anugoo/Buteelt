@@ -3,6 +3,27 @@ from .forms import ProductForm
 from .models import Product,Category
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+import sqlite3 
+
+
+def index(request):
+    pro = Product.objects.all().order_by('-created_date')[:4]
+    total_count = len(pro)
+    return render(request, "index.html",{'products':pro,'total': total_count})
+
+def store_view(request):
+    with sqlite3.connect("db.sqlite3") as conn:
+        conn.row_factory =sqlite3.Row
+        cursor= conn.cursor()
+        cursor.execute("select* from store_app_product")
+        pro=cursor.fetchall()
+        cursor.execute("SELECT COUNT(*) FROM store_app_product")
+        total_count = cursor.fetchone()[0]
+    # pro = Product.objects.all()
+    return render(request, "store.html",{'products': pro,'total': total_count})
+def detail_view(request):
+    # логик
+    return render(request, 'product-detail.html')
 
 def signin_view(request):
     if request.method == 'POST':
@@ -24,9 +45,7 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
-def store_view(request):
-    # логик
-    return render(request, 'store.html')
+
 def cart_view(request):
     # логик
     return render(request, 'cart.html')
@@ -39,9 +58,6 @@ def order_view(request):
 def place_view(request):
     # логик
     return render(request, 'place-order.html')
-def detail_view(request):
-    # логик
-    return render(request, 'product-detail.html')
 def search_view(request):
     # логик
     return render(request, 'search-result.html')
@@ -61,7 +77,4 @@ def create_product(request):
 def product_success(request):
     return render(request, 'product_success.html')
 
-def index(request):
-    cat = Category.objects.all()
-    pro = Product.objects.all()
-    return render(request, "index.html",{'cats':cat,'products':pro})
+
