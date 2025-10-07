@@ -9,8 +9,10 @@ from django.conf import settings
 urlpatterns = [
     path('', views.index, name='index'),
     path("store/", views.store_view, name="store"),
-    path('store/<slug:slug>/', views.store_view, name='store'),
-    path('detail/<slug:slug>/', views.detail_view, name='detail'),
+    # path('store/<slug:category_slug>/<slug:product_slug>/', views.store_view_detail, name='detail'),
+    path('<slug:category_slug>/', views.store_view_detail, name='store_by_category'),
+    path('<slug:category_slug>/<slug:product_slug>/', views.store_view_detail, name='detail'),
+    # path('store/<slug:category_slug>/<slug:product_slug>/', views.store_view_detail, name='detail1'),
     path('product/create/', views.create_product, name='create_product'),
     path('product/success/', views.product_success, name='product_success'),
     path('signin/', views.signin_view, name='signin'),

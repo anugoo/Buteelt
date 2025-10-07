@@ -7,7 +7,7 @@
     <meta http-equiv="cache-control" content="max-age=604800" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>{% block title %}Django | One of the Biggest Online Shopping Platform{% endblock %}</title>
+    <title>Ecom</title>
 
     <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
 
@@ -67,7 +67,8 @@
 <div class="row align-items-center">
 	<div class="col-lg-2 col-md-3 col-6">
 		<a href="{% url 'index' %}" class="brand-wrap">
-			<img class="logo" src="{% static 'images/logo.png' %}">
+			<img class="logo" src="{% static 'images/logo.png' %}" width="80" height="50">
+
 		</a>
 	</div>
 	<div class="col-lg col-sm col-md col-6 flex-grow-0">
@@ -78,7 +79,7 @@
 			<div class="dropdown-menu">
 
 				{% for cat in all_categories %}
-					<a class="dropdown-item" href="#">{{ cat.cat.name }}</a>
+					<a class="dropdown-item" href="{% url 'store_by_category' cat.slug %}">{{ cat.category_name }}</a>
 				{% empty %}
 					<span class="dropdown-item text-muted">No categories found</span>
 				{% endfor %}

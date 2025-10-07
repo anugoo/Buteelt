@@ -4,6 +4,7 @@ from .models import Product,Category
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 import sqlite3 
+from django.shortcuts import render, get_object_or_404
 
 
 def index(request):
@@ -12,15 +13,40 @@ def index(request):
     return render(request, "index.html",{'products':pro,'total': total_count})
 
 def store_view(request):
-    with sqlite3.connect("db.sqlite3") as conn:
-        conn.row_factory =sqlite3.Row
-        cursor= conn.cursor()
-        cursor.execute("select* from store_app_product")
-        pro=cursor.fetchall()
-        cursor.execute("SELECT COUNT(*) FROM store_app_product")
-        total_count = cursor.fetchone()[0]
-    # pro = Product.objects.all()
-    return render(request, "store.html",{'products': pro,'total': total_count})
+    products = Product.objects.all()
+    total_count=len(products)
+    # with sqlite3.connect("db.sqlite3") as conn:
+    #     conn.row_factory = sqlite3.Row
+    #     cursor = conn.cursor()
+    #     cursor.execute("""
+    #         SELECT p.*, c.slug AS category_slug
+    #         FROM store_app_product p
+    #         JOIN store_app_category c
+    #         ON p.category_id = c.id
+    #     """)
+    #     products = cursor.fetchall()
+    #     cursor.execute("SELECT COUNT(*) FROM store_app_product")
+    #     total_count = cursor.fetchone()[0]
+
+    return render(request, "store.html", {'products': products, 'total': total_count})
+
+def store_view_detail(request, category_slug=None, product_slug=None):
+    print("hhhhhhhhhhhhh")
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        
+        if product_slug:
+            product = get_object_or_404(Product, category=category, slug=product_slug)
+            return render(request, 'product_detail.html', {'product': product})
+        else:
+            products = Product.objects.filter(category=category)
+            return render(request, 'store.html', {'products': products, 'category': category})
+    else:
+        products = Product.objects.all()
+        return render(request, 'store.html', {'products': products})
+
+
+
 def detail_view(request):
     # логик
     return render(request, 'product-detail.html')

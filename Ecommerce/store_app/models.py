@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.fields import SlugField
+from django.urls import reverse
 class Category(models.Model):
     category_name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
@@ -20,4 +21,11 @@ class Product(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
     def __str__ (self):
         return self.product_name
+    def get_url(self):
+        # return f"{self.category.slug}/{self.slug}"
+        # if self.category:
+        return reverse('detail', kwargs={
+            'category_slug': self.category.slug,
+            'product_slug': self.slug
+        })
 
