@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 import sqlite3 
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
 
 
 def index(request):
@@ -12,23 +13,24 @@ def index(request):
     total_count = len(pro)
     return render(request, "index.html",{'products':pro,'total': total_count})
 
-def store_view(request):
-    products = Product.objects.all()
-    total_count=len(products)
-    # with sqlite3.connect("db.sqlite3") as conn:
-    #     conn.row_factory = sqlite3.Row
-    #     cursor = conn.cursor()
-    #     cursor.execute("""
-    #         SELECT p.*, c.slug AS category_slug
-    #         FROM store_app_product p
-    #         JOIN store_app_category c
-    #         ON p.category_id = c.id
-    #     """)
-    #     products = cursor.fetchall()
-    #     cursor.execute("SELECT COUNT(*) FROM store_app_product")
-    #     total_count = cursor.fetchone()[0]
 
-    return render(request, "store.html", {'products': products, 'total': total_count})
+def store_view(request):
+    product_list = Product.objects.all()
+    paginator = Paginator(product_list, 2)  
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    total_count = product_list.count()
+
+    # all_categories = Category.objects.all()
+
+    return render(request, "store.html", {
+        'page_obj': page_obj,
+        'total': total_count,
+        # 'all_categories': all_categories
+    })
+
 
 def store_view_detail(request, category_slug=None, product_slug=None):
     print("hhhhhhhhhhhhh")
