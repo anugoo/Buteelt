@@ -52,10 +52,15 @@
 				</div>
 
 				<hr>
-				<a href="#" class="btn btn-primary"> 
-					<span class="text">Add to cart</span> 
-					<i class="fas fa-shopping-cart"></i>  
+				{% if product.stock < 1 %}
+				<button class="btn btn-secondary" disabled>Бараа дууссан</button>
+				{% else %}
+				<a href="#" class="btn btn-primary">
+					<span class="text">Сагсанд нэмэх</span>
+					<i class="fas fa-shopping-cart"></i>
 				</a>
+				{% endif %}
+
 
 			</article>
 		</main>
