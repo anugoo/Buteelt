@@ -4,8 +4,10 @@ from django.urls import path, include
 from django.views.generic.base import RedirectView 
 from django.conf.urls.static import static
 from django.conf import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('cart/', include('cart_app.urls')),
     path('', include('store_app.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

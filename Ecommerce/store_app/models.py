@@ -29,3 +29,5 @@ class Product(models.Model):
             'product_slug': self.slug
         })
 
+
+

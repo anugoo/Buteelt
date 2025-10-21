@@ -118,7 +118,7 @@
                     <span class="price">{{ pro.price }}₮</span>
                   </div>
                 </div>
-                <a href="#" class="btn btn-block btn-success {% if pro.stock < 1 %}disabled{% endif %}">
+                <a href="{% url 'add_cart' pro.id %}" class="btn btn-block btn-success {% if pro.stock < 1 %}disabled{% endif %}">
                   {% if pro.stock < 1 %}
                     Бараа дууссан
                   {% else %}

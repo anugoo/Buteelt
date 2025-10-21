@@ -48,7 +48,6 @@ def store_view_detail(request, category_slug=None, product_slug=None):
         return render(request, 'store.html', {'products': products})
 
 
-
 def detail_view(request):
     # логик
     return render(request, 'product-detail.html')
@@ -74,9 +73,8 @@ def register_view(request):
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 
-def cart_view(request):
-    # логик
-    return render(request, 'cart.html')
+
+
 def dashboard_view(request):
     # логик
     return render(request, 'dashboard.html')
